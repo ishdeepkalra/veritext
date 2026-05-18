@@ -1,8 +1,13 @@
 # 🛡️ VeriText: On-Device AI Scam Protection
 
-**VeriText** is a privacy-first Android application designed to intercept and analyze incoming SMS messages in real-time to protect users from scams, phishing, and fraud. 
+### 📱 **What is VeriText?**
+**VeriText** is a native, local-first Android application that provides real-time, enterprise-grade protection against SMS phishing (smishing) and scams. By leveraging the power of **Gemma 4**, VeriText intercepts incoming text messages and instantly analyzes them for malicious intent—all without a single byte of your private data ever leaving your device.
 
-Built for the **Gemma 4 Good Hackathon**, VeriText leverages the power of Google's **Gemma 4** AI model running entirely on-device via **LiteRT**. This means your private messages never leave your phone—providing enterprise-grade AI threat detection without compromising user privacy or requiring an internet connection.
+### 🚨 **The Problem**
+SMS-based scams and phishing attacks are growing exponentially, targeting vulnerable demographics with alarming success. While AI is highly capable of detecting these threats, existing solutions require uploading your private, highly sensitive text messages to a cloud server for analysis. This creates a massive privacy paradox: **to protect your security, you must surrender your privacy.**
+
+### 🛡️ **The Solution & How We Built It**
+We built VeriText to solve this paradox by bringing the AI directly to the edge. Designed specifically for the **Gemma 4 Good Hackathon**, VeriText represents a breakthrough in local-first mobile security.
 
 ---
 
@@ -22,10 +27,31 @@ VeriText is built entirely natively for Android, emphasizing performance and sec
 *   **Language:** Kotlin
 *   **UI Framework:** Jetpack Compose
 *   **AI / Machine Learning:** LiteRT (formerly TensorFlow Lite)
-*   **Core Model:** **Gemma 4** (Optimized for edge deployment)
+*   **Core Model:** `gemma-4-E4B-it` (Optimized for edge deployment)
 *   **Background Processing:** Android Foreground Services & Broadcast Receivers
 
----
+#### **Architecture Overview**
+```text
+Incoming SMS Payload (Sender + Body)
+        │
+        ▼
+  SmsReceiver (Android OS Broadcast)
+        │
+        ├──► If App UI is closed: Triggers SmsAnalysisService (Foreground)
+        └──► If App UI is open: Routes payload directly to Jetpack Compose UI
+        │
+        ▼
+  Gemma 4 E4B-it (via Google LiteRT, 100% offline)
+        │
+        ├──► Tokenizes SMS text for local hardware inference
+        ├──► Analyzes payload for urgency or psychological manipulation tactics
+        ├──► Scans for deceptive phishing links or malicious instructions
+        └──► Formats output into structured, parseable JSON
+        │
+        ▼
+  Safety Verdict + Threat Reasoning + Actionable Advice
+  (Delivered instantly via High-Priority OS Notification)
+```
 
 ## 🚀 How It Works
 
@@ -34,6 +60,14 @@ VeriText is built entirely natively for Android, emphasizing performance and sec
 3.  **Gemma 4 Analysis:** The `VeriTextModelController` tokenizes the message and runs it through the on-device **Gemma 4** model using LiteRT.
 4.  **Risk Assessment:** The model outputs a JSON-formatted risk assessment (e.g., SAFE, SUSPICIOUS, SCAM) along with a rationale.
 5.  **User Notification:** If a threat is detected, the app immediately alerts the user, displaying the reasoning behind the flag.
+
+---
+
+## 🌍 The Value and Impact
+
+VeriText sits at the intersection of **Safety & Trust** and **Digital Inclusivity**. By entirely eliminating the need for cloud compute, VeriText democratizes high-end AI security. It works flawlessly in remote areas with zero internet connectivity and guarantees absolute data sovereignty for the user. 
+
+As a true local-first mobile application designed for the **Cactus Prize** category, VeriText showcases the incredible edge capabilities of LiteRT and Gemma 4, proving that powerful, privacy-preserving AI can fit right in your pocket.
 
 ---
 

@@ -10,7 +10,7 @@ Built for the **Gemma 4 Good Hackathon**, VeriText leverages the power of Google
 
 *   **🧠 Local AI Inference with Gemma 4:** Powered by Google's **Gemma 4** model running locally on your device's hardware via LiteRT. Enjoy state-of-the-art natural language processing without cloud dependencies.
 *   **🔒 100% Privacy-Preserving:** Completely offline analysis. Your SMS data is never uploaded, shared, or stored on any external servers.
-*   **⚡ "Always-On" Real-Time Scanning:** Employs a robust background foreground service (with Boot Receiver support) to instantly analyze new messages the moment they arrive, preventing the OS from killing the background protection process.
+*   **⚡ "Always-On" Real-Time Scanning:** Employs a robust foreground service (with Boot Receiver support) to instantly analyze new messages the moment they arrive, preventing the OS from killing the protection process.
 *   **🔔 Instant Intelligent Alerts:** Receive immediate notifications with a risk assessment and an AI-generated explanation if a malicious message is detected.
 *   **📱 Modern UI:** Built natively in Kotlin using **Jetpack Compose** for a seamless, fast, and beautiful Android user experience.
 
@@ -32,7 +32,7 @@ VeriText is built entirely natively for Android, emphasizing performance and sec
 1.  **Message Interception:** When an SMS is received, the `SmsReceiver` intercepts the payload.
 2.  **Foreground Processing:** The text is securely passed to the `SmsAnalysisService` which operates consistently in the background.
 3.  **Gemma 4 Analysis:** The `VeriTextModelController` tokenizes the message and runs it through the on-device **Gemma 4** model using LiteRT.
-4.  **Risk Assessment:** The model outputs a JSON-formatted risk assessment (e.g., Safe, Suspicious, Scam) along with a rationale.
+4.  **Risk Assessment:** The model outputs a JSON-formatted risk assessment (e.g., SAFE, SUSPICIOUS, SCAM) along with a rationale.
 5.  **User Notification:** If a threat is detected, the app immediately alerts the user, displaying the reasoning behind the flag.
 
 ---
@@ -51,8 +51,10 @@ VeriText is built entirely natively for Android, emphasizing performance and sec
     cd veritext
     ```
 2.  **Add the Gemma 4 LiteRT Model:**
-    *   Ensure you have the converted `gemma-4.tflite` (or `.bin`) LiteRT model.
-    *   Place the model files inside the Android project's `app/src/main/assets/` folder.
+    *   Download the pre-converted `gemma-4-E4B-it.litertlm` LiteRT model from Hugging Face: [Download Model](https://huggingface.co/litert-community/gemma-4-E4B-it-litert-lm/blob/main/gemma-4-E4B-it.litertlm).
+    *   Because of its size (3.6GB), the model is not bundled in the APK.
+    *   Push the model file to your device's local storage at: `/sdcard/Android/data/com.veritext.app/files/gemma-4-E4B-it.litertlm`
+    *   You can use ADB: `adb push gemma-4-E4B-it.litertlm /sdcard/Android/data/com.veritext.app/files/`
 3.  **Build and Run:**
     *   Open the project in Android Studio.
     *   Sync Gradle files.
